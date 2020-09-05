@@ -1,20 +1,46 @@
 {
-  "name": "calc-ts",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/OwtmPatrick/calc-ts.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/OwtmPatrick/calc-ts/issues"
-  },
-  "homepage": "https://github.com/OwtmPatrick/calc-ts#readme"
+	"name": "calc-ts",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"serve": "webpack-dev-server --mode=development",
+		"build": "webpack",
+		"build:prod": "webpack --config webpack.config.prod.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/OwtmPatrick/calc-ts.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/OwtmPatrick/calc-ts/issues"
+	},
+	"homepage": "https://github.com/OwtmPatrick/calc-ts#readme",
+	"devDependencies": {
+		"@types/node": "^14.6.4",
+		"clean-webpack-plugin": "^3.0.0",
+		"copy-webpack-plugin": "^6.1.0",
+		"css-loader": "^4.2.2",
+		"cssnano": "^4.1.10",
+		"file-loader": "^6.1.0",
+		"html-webpack-plugin": "^4.4.1",
+		"mini-css-extract-plugin": "^0.11.0",
+		"node-sass": "^4.14.1",
+		"postcss-cssnext": "^3.1.0",
+		"postcss-import": "^12.0.1",
+		"postcss-loader": "^3.0.0",
+		"sass-loader": "^10.0.2",
+		"style-loader": "^1.2.1",
+		"sugarss": "^2.0.0",
+		"ts-loader": "^8.0.3",
+		"tsconfig-paths-webpack-plugin": "^3.3.0",
+		"typescript": "^4.0.2",
+		"webpack": "^4.44.1",
+		"webpack-cli": "^3.3.12",
+		"webpack-dev-server": "^3.11.0",
+		"webpack-merge": "^5.1.3"
+	}
 }
