@@ -21,6 +21,11 @@ const parse = (): void => {
 
 	const result = parsePlusSeparatedExpression(expression);
 
+	if (window.isNaN(result)) {
+		inputOut.textContent = 'Please enter the correct expression';
+		return;
+	}
+
 	inputOut.textContent = result;
 };
 
