@@ -78,6 +78,7 @@ body {
 	}
 
 	&__row {
+		display: flex;
 		margin: 16px -15px;
 
 		@media #{$tablet-small} {
@@ -87,6 +88,9 @@ body {
 
 	&__btn {
 		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		width: 40px;
 		height: 40px;
 		margin: 0 15px;
