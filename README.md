@@ -4,7 +4,7 @@ A simple calculator that allows you to use the operations of addition, subtracti
 
 ## Usage
 
-Just enter expression by clicking corresponding buttons or using keyboard and then click = or enter key.
+Just enter expression by clicking corresponding buttons or using keyboard and then click <code>=</code> or <code>enter</code> key.
 
 ## Start
 
@@ -15,10 +15,10 @@ Just enter expression by clicking corresponding buttons or using keyboard and th
 npm install
 ```
 
-3. serve dev server
+3. Start dev server
 
 ```
-npm run serve
+npm run start
 ```
 
 ## Build
@@ -29,7 +29,7 @@ Run following command to build your source code:
 npm run build
 ```
 
-And go to <code><b>dist</b></code> folder
+And go to <code>dist</code> folder
 
 ## Static code analyze
 
@@ -41,7 +41,7 @@ You can run linters for static code analyzing:
 npm run lint
 ```
 
-also you can use --fix flag for autofixing if it is possible
+also you can use --fix flag for autofixing if it is possible:
 
 ```
 npm run lint:fix
