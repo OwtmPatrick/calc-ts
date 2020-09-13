@@ -26,7 +26,7 @@ const parse = (): void => {
 		return;
 	}
 
-	inputOut.textContent = result;
+	inputOut.textContent = result.toFixed(7);
 };
 
 const onKeyDown = (event: KeyboardEvent): void => {

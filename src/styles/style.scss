@@ -45,6 +45,11 @@ body {
 		display: flex;
 		flex-direction: column;
 		border-bottom: 2px solid rgba(255, 255, 255, .35);
+
+		@media #{$tablet-small} {
+			max-width: 440px;
+			overflow: hidden;
+		}
 	}
 
 	&__input {
