@@ -1,0 +1,11 @@
+{
+	"env": {
+		"es6": true
+	},
+	"rules": {
+		"no-plusplus": "off",
+		"indent": ["error", "tab"]
+	},
+	"plugins": ["@typescript-eslint"],
+	"extends": ["graph-base", "plugin:@typescript-eslint/recommended"]
+}
