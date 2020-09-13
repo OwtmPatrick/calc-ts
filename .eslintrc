@@ -4,8 +4,10 @@
 	},
 	"rules": {
 		"no-plusplus": "off",
-		"indent": ["error", "tab"]
+		"indent": ["error", "tab"],
+		"import/extensions": ["error", "ignorePackages", {"ts": "never"}]
 	},
 	"plugins": ["@typescript-eslint"],
+	"settings": {"import/resolver": {"node": {"extensions": [".ts"]}}},
 	"extends": ["graph-base", "plugin:@typescript-eslint/recommended"]
 }
