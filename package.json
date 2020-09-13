@@ -32,7 +32,7 @@
 	"bugs": {
 		"url": "https://github.com/OwtmPatrick/calc-ts/issues"
 	},
-	"homepage": "https://github.com/OwtmPatrick/calc-ts#readme",
+	"homepage": "https://github.com/OwtmPatrick/calc-ts",
 	"devDependencies": {
 		"@types/jest": "^26.0.13",
 		"@types/node": "^14.6.4",
