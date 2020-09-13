@@ -7,8 +7,10 @@
 		"serve": "webpack-dev-server --mode=development",
 		"build": "webpack",
 		"build:prod": "webpack --config webpack.config.prod.js",
-		"stylelint": "stylelint --config=.stylelintrc ./src/styles/**/*.scss",
-		"stylelint:fix": "stylelint --fix --config=.stylelintrc ./src/styles/**/*.scss"
+		"lint": "eslint --ext .ts ./src ",
+		"lint:fix": "eslint --fix --ext .ts ./src ",
+		"stylelint": "stylelint ./src/styles/**/*.scss",
+		"stylelint:fix": "stylelint --fix ./src/styles/**/*.scss"
 	},
 	"repository": {
 		"type": "git",
