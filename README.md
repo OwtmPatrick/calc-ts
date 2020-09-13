@@ -1,6 +1,6 @@
 # Calculator
 
-A simple calculator that allows you to use the operations of addition, subtraction, multiplication and division, as well as parentheses.
+A simple calculator that allows you to use the operations of addition, subtraction, multiplication and division, as well as parentheses. Here is working [example](https://owtmpatrick.github.io/calc-ts/)
 
 ## Usage
 
