@@ -20,12 +20,15 @@ const parse = (): void => {
 	}
 
 	const result = parsePlusSeparatedExpression(expression);
+	const isError: boolean = window.isNaN(result) || result === Infinity || result === -Infinity;
 
-	if (window.isNaN(result)) {
+	if (isError) {
+		inputOut.classList.add('calc__input_error');
 		inputOut.textContent = 'Please enter the correct expression';
 		return;
 	}
 
+	inputOut.classList.remove('calc__input_error');
 	inputOut.textContent = result.toFixed(7);
 };
 
