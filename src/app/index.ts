@@ -1,6 +1,7 @@
 export {};
 import replaceCharInExpression from '../utils/replace-char-in-expression';
 import getElementText from '../utils/get-element-text';
+import isMobile from '../utils/is-mobile';
 
 import parsePlusSeparatedExpression from './parse-expression';
 
@@ -72,5 +73,9 @@ btns.forEach((btn: HTMLButtonElement): void => {
 
 resultBtn.addEventListener('click', parse);
 hiddenInput.addEventListener('keydown', onKeyDown);
-window.addEventListener('load', (): void => hiddenInput.focus());
+window.addEventListener('load', (): void => {
+	if (!isMobile()) {
+		hiddenInput.focus();
+	}
+});
 document.addEventListener('click', (): void => hiddenInput.focus());

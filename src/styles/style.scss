@@ -42,10 +42,15 @@ body {
 	}
 
 	&__hidden-input {
+		display: none;
 		padding: 0;
 		opacity: 0;
 		height: 0;
 		border: none;
+
+		@media #{$desktop-small} {
+			display: block;
+		}
 	}
 
 	&__top {
