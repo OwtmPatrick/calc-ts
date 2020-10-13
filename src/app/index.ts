@@ -1,4 +1,3 @@
-export {};
 import replaceCharInExpression from '../utils/replace-char-in-expression';
 import getElementText from '../utils/get-element-text';
 import isMobile from '../utils/is-mobile';
@@ -8,75 +7,96 @@ import parsePlusSeparatedExpression from './parse-expression';
 
 import keys from '../constants/keys';
 
-const btns = [].slice.call(document.querySelectorAll<HTMLButtonElement>('.calc__btn'));
-const resultBtn = document.querySelector('.calc__btn_result') as HTMLButtonElement;
-const inputIn = document.querySelector('.calc__input_in') as HTMLDivElement;
-const inputOut = document.querySelector('.calc__input_out') as HTMLDivElement;
-const hiddenInput = document.querySelector('.calc__hidden-input') as HTMLInputElement;
+class Calc {
+	public input: HTMLDivElement;
 
-const parse = (): void => {
-	const expression = replaceCharInExpression(getElementText(inputIn), ',', '.');
+	public inputOut: HTMLDivElement;
 
-	if (!expression) {
-		return;
+	public btns: Array<HTMLButtonElement>;
+
+	private hiddenInput: HTMLInputElement;
+
+	constructor() {
+		this.input = document.querySelector('.calc__input_in') as HTMLDivElement;
+		this.inputOut = document.querySelector('.calc__input_out') as HTMLDivElement;
+		this.btns = [].slice.call(document.querySelectorAll<HTMLButtonElement>('.calc__btn'));
+		this.hiddenInput = document.querySelector('.calc__hidden-input') as HTMLInputElement;
 	}
 
-	const result = parsePlusSeparatedExpression(expression);
-	const isError: boolean = window.isNaN(result) || result === Infinity || result === -Infinity;
+	public init(): void {
+		const calcBtn = document.querySelector('.calc__btn_result') as HTMLButtonElement;
 
-	if (isError) {
-		inputOut.classList.add('calc__input_error');
-		inputOut.textContent = 'Please enter the correct expression';
-		return;
+		this.btns.forEach((btn: HTMLButtonElement): void => {
+			btn.addEventListener('click', (): void => this.onBtnClick(btn));
+		});
+
+		calcBtn.addEventListener('click', this.calculate);
+		this.hiddenInput.addEventListener('keydown', this.onKeyDown);
+		window.addEventListener('load', (): void => {
+			if (!isMobile()) {
+				this.hiddenInput.focus();
+			}
+		});
+
+		document.addEventListener('click', (): void => this.hiddenInput.focus());
 	}
 
-	inputOut.classList.remove('calc__input_error');
-	inputOut.textContent = omitNules(result.toFixed(7));
-};
+	private calculate = (): void => {
+		const expression = replaceCharInExpression(getElementText(this.input), ',', '.');
 
-const onKeyDown = (event: KeyboardEvent): void => {
-	const {key} = event;
-
-	if (keys.find((k: string) => k === key)) {
-		if (key === 'Enter') {
-			parse();
+		if (!expression) {
 			return;
 		}
 
-		if (key === '*') {
-			inputIn.textContent += '×';
+		const result = parsePlusSeparatedExpression(expression);
+		const isError: boolean = window.isNaN(result) || result === Infinity || result === -Infinity;
+
+		if (isError) {
+			this.inputOut.classList.add('calc__input_error');
+			this.inputOut.textContent = 'Please enter the correct expression';
 			return;
 		}
 
-		inputIn.textContent += key;
+		this.inputOut.classList.remove('calc__input_error');
+		this.inputOut.textContent = omitNules(result.toFixed(7));
 	}
-};
 
-btns.forEach((btn: HTMLButtonElement): void => {
-	btn.addEventListener('click', (): void => {
+	private onKeyDown = (event: KeyboardEvent): void => {
+		const {key} = event;
+
+		if (keys.find((k: string) => k === key)) {
+			if (key === 'Enter') {
+				this.calculate();
+				return;
+			}
+
+			if (key === '*') {
+				this.input.textContent += '×';
+				return;
+			}
+
+			this.input.textContent += key;
+		}
+	};
+
+	private onBtnClick = (btn: HTMLButtonElement): void => {
 		const text: string = getElementText(btn);
 
 		if (text === '=') {
-			hiddenInput.focus();
+			this.hiddenInput.focus();
 			return;
 		}
 
 		if (text === 'C') {
-			inputIn.textContent = '';
-			hiddenInput.focus();
+			this.input.textContent = '';
+			this.inputOut.textContent = '';
+			this.hiddenInput.focus();
 			return;
 		}
 
-		inputIn.textContent += text;
-		hiddenInput.focus();
-	});
-});
-
-resultBtn.addEventListener('click', parse);
-hiddenInput.addEventListener('keydown', onKeyDown);
-window.addEventListener('load', (): void => {
-	if (!isMobile()) {
-		hiddenInput.focus();
+		this.input.textContent += text;
+		this.hiddenInput.focus();
 	}
-});
-document.addEventListener('click', (): void => hiddenInput.focus());
+}
+
+export default Calc;

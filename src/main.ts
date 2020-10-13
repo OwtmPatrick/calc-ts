@@ -1,3 +1,7 @@
 import './styles/style.scss';
 
-import './app/index';
+import Calc from './app';
+
+const calc = new Calc();
+
+calc.init();
