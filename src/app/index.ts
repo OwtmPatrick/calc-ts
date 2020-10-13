@@ -2,6 +2,7 @@ export {};
 import replaceCharInExpression from '../utils/replace-char-in-expression';
 import getElementText from '../utils/get-element-text';
 import isMobile from '../utils/is-mobile';
+import omitNules from '../utils/omit-nules';
 
 import parsePlusSeparatedExpression from './parse-expression';
 
@@ -30,7 +31,7 @@ const parse = (): void => {
 	}
 
 	inputOut.classList.remove('calc__input_error');
-	inputOut.textContent = result.toFixed(7);
+	inputOut.textContent = omitNules(result.toFixed(7));
 };
 
 const onKeyDown = (event: KeyboardEvent): void => {
