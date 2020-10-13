@@ -26,5 +26,5 @@ test('should remove all the null before dot', () => {
 });
 
 test('should not remove null directly before dot', () => {
-	expect(omitNules('54.0')).toBe('54.0');
+	expect(omitNules('54.0')).toBe('54');
 });
