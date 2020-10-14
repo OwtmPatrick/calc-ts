@@ -1,4 +1,3 @@
-import replaceCharInExpression from '../utils/replace-char-in-expression';
 import getElementText from '../utils/get-element-text';
 import isMobile from '../utils/is-mobile';
 import omitNules from '../utils/omit-nules';
@@ -8,19 +7,22 @@ import parsePlusSeparatedExpression from './parse-expression';
 import keys from '../constants/keys';
 
 class Calc {
-	public input: HTMLDivElement;
+	private input: HTMLDivElement;
 
-	public inputOut: HTMLDivElement;
+	private inputOut: HTMLDivElement;
 
-	public btns: Array<HTMLButtonElement>;
+	private btns: Array<HTMLButtonElement>;
 
 	private hiddenInput: HTMLInputElement;
+
+	private expression: string;
 
 	constructor() {
 		this.input = document.querySelector('.calc__input_in') as HTMLDivElement;
 		this.inputOut = document.querySelector('.calc__input_out') as HTMLDivElement;
 		this.btns = [].slice.call(document.querySelectorAll<HTMLButtonElement>('.calc__btn'));
 		this.hiddenInput = document.querySelector('.calc__hidden-input') as HTMLInputElement;
+		this.expression = '';
 	}
 
 	public init(): void {
@@ -42,7 +44,7 @@ class Calc {
 	}
 
 	private calculate = (): void => {
-		const expression = replaceCharInExpression(getElementText(this.input), ',', '.');
+		const {expression} = this;
 
 		if (!expression) {
 			return;
@@ -70,32 +72,43 @@ class Calc {
 				return;
 			}
 
-			if (key === '*') {
-				this.input.textContent += '×';
-				return;
-			}
-
-			this.input.textContent += key;
+			this.expression += key;
+			this.print(key);
 		}
 	};
 
 	private onBtnClick = (btn: HTMLButtonElement): void => {
 		const text: string = getElementText(btn);
 
+		this.hiddenInput.focus();
+
 		if (text === '=') {
-			this.hiddenInput.focus();
 			return;
 		}
 
 		if (text === 'C') {
-			this.input.textContent = '';
-			this.inputOut.textContent = '';
-			this.hiddenInput.focus();
+			this.clear();
 			return;
 		}
 
-		this.input.textContent += text;
-		this.hiddenInput.focus();
+		this.expression += text;
+		this.print(text);
+	}
+
+	private clear = (): void => {
+		this.input.textContent = '';
+		this.expression = '';
+		this.inputOut.textContent = '';
+	}
+
+	private print = (text: string): void => {
+		if (text === '*') {
+			this.input.textContent += '×';
+		} else if (text === '.') {
+			this.input.textContent += ',';
+		} else {
+			this.input.textContent += text;
+		}
 	}
 }
 
