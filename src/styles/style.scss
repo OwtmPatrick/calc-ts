@@ -6,6 +6,11 @@ body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+
+	@media #{$tablet-small} {
+		height: auto;
+		min-height: 100vh;
+	}
 }
 
 body {
@@ -13,6 +18,7 @@ body {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		padding: 40px;
 		background: linear-gradient(122.76deg, $pink-light 4.09%, $pink 91.04%), $white;
 	}
 }
