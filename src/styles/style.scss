@@ -184,6 +184,25 @@ body {
 			background-color: $white;
 			color: $blue-bright;
 		}
+
+		&_multiply,
+		&_comma {
+			font-size: 0;
+		}
+
+		&_multiply:after,
+		&_comma::after {
+			font-size: 36px;
+			line-height: 88px;
+		}
+
+		&_multiply:after {
+			content: '×';
+		}
+
+		&_comma:after {
+			content: ',';
+		}
 	}
 
 	&__frame {
