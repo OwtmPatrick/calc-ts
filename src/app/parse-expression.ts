@@ -1,4 +1,4 @@
-const split = (expression: string, operator: string) => {
+const split = (expression: string, operator: '+' | '-' | '*' | '/') => {
 	const result = [];
 	let braces = 0;
 	let currentChunk = '';
@@ -50,7 +50,6 @@ const parseDivisionSeparatedExpression = (expression: string): any => {
 	return result;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const parseMultiplicationSeparatedExpression = (expression: string): number => {
 	const numbersString = split(expression, '*');
 	const numbersDivision = numbersString.map(noStr => parseDivisionSeparatedExpression(noStr));
