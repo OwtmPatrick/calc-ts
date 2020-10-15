@@ -1,17 +1,14 @@
 import getElementText from '../utils/get-element-text';
 import isMobile from '../utils/is-mobile';
 import omitNules from '../utils/omit-nules';
-
 import parsePlusSeparatedExpression from './parse-expression';
-
 import keys from '../constants/keys';
+import error from '../constants/error';
 
 class Calc {
 	private input: HTMLDivElement;
 
 	private inputOut: HTMLDivElement;
-
-	private btns: Array<HTMLButtonElement>;
 
 	private hiddenInput: HTMLInputElement;
 
@@ -20,19 +17,17 @@ class Calc {
 	constructor() {
 		this.input = document.querySelector('.calc__input_in') as HTMLDivElement;
 		this.inputOut = document.querySelector('.calc__input_out') as HTMLDivElement;
-		this.btns = [].slice.call(document.querySelectorAll<HTMLButtonElement>('.calc__btn'));
 		this.hiddenInput = document.querySelector('.calc__hidden-input') as HTMLInputElement;
 		this.expression = '';
 	}
 
 	public init(): void {
-		const calcBtn = document.querySelector('.calc__btn_result') as HTMLButtonElement;
+		const btns = [].slice.call(document.querySelectorAll<HTMLButtonElement>('.calc__btn'));
 
-		this.btns.forEach((btn: HTMLButtonElement): void => {
+		btns.forEach((btn: HTMLButtonElement): void => {
 			btn.addEventListener('click', (): void => this.onBtnClick(btn));
 		});
 
-		calcBtn.addEventListener('click', this.calculate);
 		this.hiddenInput.addEventListener('keydown', this.onKeyDown);
 		window.addEventListener('load', (): void => {
 			if (!isMobile()) {
@@ -54,13 +49,29 @@ class Calc {
 		const isError: boolean = window.isNaN(result) || result === Infinity || result === -Infinity;
 
 		if (isError) {
-			this.inputOut.classList.add('calc__input_error');
-			this.inputOut.textContent = 'Please enter the correct expression';
+			this.inputOut.classList.add(error.className);
+			this.inputOut.textContent = error.message;
 			return;
 		}
 
-		this.inputOut.classList.remove('calc__input_error');
+		this.inputOut.classList.remove(error.className);
 		this.inputOut.textContent = omitNules(result.toFixed(7));
+	}
+
+	private clear = (): void => {
+		this.input.textContent = '';
+		this.expression = '';
+		this.inputOut.textContent = '';
+	}
+
+	private print = (text: string): void => {
+		if (text === '*') {
+			this.input.textContent += '×';
+		} else if (text === '.') {
+			this.input.textContent += ',';
+		} else {
+			this.input.textContent += text;
+		}
 	}
 
 	private onKeyDown = (event: KeyboardEvent): void => {
@@ -83,6 +94,7 @@ class Calc {
 		this.hiddenInput.focus();
 
 		if (text === '=') {
+			this.calculate();
 			return;
 		}
 
@@ -93,22 +105,6 @@ class Calc {
 
 		this.expression += text;
 		this.print(text);
-	}
-
-	private clear = (): void => {
-		this.input.textContent = '';
-		this.expression = '';
-		this.inputOut.textContent = '';
-	}
-
-	private print = (text: string): void => {
-		if (text === '*') {
-			this.input.textContent += '×';
-		} else if (text === '.') {
-			this.input.textContent += ',';
-		} else {
-			this.input.textContent += text;
-		}
 	}
 }
 
