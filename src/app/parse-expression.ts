@@ -1,5 +1,3 @@
-import replaceCharInExpression from '../utils/replace-char-in-expression';
-
 const split = (expression: string, operator: string) => {
 	const result = [];
 	let braces = 0;
@@ -53,8 +51,8 @@ const parseDivisionSeparatedExpression = (expression: string): any => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const parseMultiplicationSeparatedExpression = (expression: string): any => {
-	const numbersString = split(replaceCharInExpression(expression, '×', '*'), '*');
+const parseMultiplicationSeparatedExpression = (expression: string): number => {
+	const numbersString = split(expression, '*');
 	const numbersDivision = numbersString.map(noStr => parseDivisionSeparatedExpression(noStr));
 	const numbers = numbersDivision.map(noStr => {
 		if (noStr[0] === '(') {
@@ -73,8 +71,15 @@ const parseMultiplicationSeparatedExpression = (expression: string): any => {
 	return result;
 };
 
-const parseMinusSeparatedExpression = (expression: string): any => {
+const parseMinusSeparatedExpression = (expression: string): number => {
 	const numbersString = split(expression, '-');
+	const EMPTY_STRING = '';
+	const emptyStringIndex = numbersString.indexOf(EMPTY_STRING);
+
+	if (emptyStringIndex !== -1) {
+		numbersString[emptyStringIndex] = '0';
+	}
+
 	const numbers = numbersString.map(noStr => parseMultiplicationSeparatedExpression(noStr));
 	const initialValue = numbers[0];
 	const result = numbers.slice(1).reduce((acc, no) => acc - no, initialValue);
@@ -82,7 +87,7 @@ const parseMinusSeparatedExpression = (expression: string): any => {
 	return result;
 };
 
-const parsePlusSeparatedExpression = (expression: string): any => {
+const parsePlusSeparatedExpression = (expression: string): number => {
 	const numbersString = split(expression, '+');
 	const numbers = numbersString.map(noStr => parseMinusSeparatedExpression(noStr));
 	const initialValue = 0.0;
@@ -92,4 +97,3 @@ const parsePlusSeparatedExpression = (expression: string): any => {
 };
 
 export default parsePlusSeparatedExpression;
-
