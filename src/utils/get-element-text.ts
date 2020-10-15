@@ -1,1 +1,1 @@
-export default (element: any): string => element.textContent;
+export default (element: HTMLButtonElement): string | null => element.textContent;

@@ -64,13 +64,15 @@ class Calc {
 		this.inputOut.textContent = '';
 	}
 
-	private print = (text: string): void => {
-		if (text === '*') {
-			this.input.textContent += '×';
-		} else if (text === '.') {
-			this.input.textContent += ',';
-		} else {
-			this.input.textContent += text;
+	private print = (text: string | null): void => {
+		if (text !== null) {
+			if (text === '*') {
+				this.input.textContent += '×';
+			} else if (text === '.') {
+				this.input.textContent += ',';
+			} else {
+				this.input.textContent += text;
+			}
 		}
 	}
 
@@ -89,7 +91,7 @@ class Calc {
 	};
 
 	private onBtnClick = (btn: HTMLButtonElement): void => {
-		const text: string = getElementText(btn);
+		const text: string | null = getElementText(btn);
 
 		this.hiddenInput.focus();
 
