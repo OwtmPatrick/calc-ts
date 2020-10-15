@@ -24,8 +24,7 @@ const split = (expression: string, operator: '+' | '-' | '*' | '/') => {
 	return result;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const parseDivisionSeparatedExpression = (expression: string): any => {
+const parseDivisionSeparatedExpression = (expression: string): number => {
 	const numbersString = split(expression, '/');
 	const numbers = numbersString.map(noStr => {
 		if (noStr[0] === '(') {
@@ -52,18 +51,7 @@ const parseDivisionSeparatedExpression = (expression: string): any => {
 
 const parseMultiplicationSeparatedExpression = (expression: string): number => {
 	const numbersString = split(expression, '*');
-	const numbersDivision = numbersString.map(noStr => parseDivisionSeparatedExpression(noStr));
-	const numbers = numbersDivision.map(noStr => {
-		if (noStr[0] === '(') {
-			const expr = noStr.substr(1, noStr.length - 2);
-
-			// eslint-disable-next-line no-use-before-define
-			return parsePlusSeparatedExpression(expr);
-		}
-
-		return +noStr;
-	});
-
+	const numbers = numbersString.map(noStr => parseDivisionSeparatedExpression(noStr));
 	const initialValue = 1.0;
 	const result = numbers.reduce((acc, no) => acc * no, initialValue);
 
