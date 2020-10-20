@@ -4,6 +4,7 @@
 	},
 	"rules": {
 		"no-plusplus": "off",
+		"no-use-before-define": "off",
 		"indent": ["error", "tab"],
 		"import/extensions": ["error", "ignorePackages", {"ts": "never"}]
 	},
