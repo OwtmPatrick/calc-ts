@@ -1,4 +1,4 @@
-const split = (expression: string, operator: '+' | '-' | '*' | '/') => {
+const split = (expression: string, operator: '+' | '-' | '*' | '/'): string[] => {
 	const result = [];
 	let braces = 0;
 	let currentChunk = '';
@@ -30,7 +30,6 @@ const parseDivisionSeparatedExpression = (expression: string): number => {
 		if (noStr[0] === '(') {
 			const expr = noStr.substr(1, noStr.length - 2);
 
-			// eslint-disable-next-line no-use-before-define
 			return parsePlusSeparatedExpression(expr);
 		}
 
@@ -60,8 +59,7 @@ const parseMultiplicationSeparatedExpression = (expression: string): number => {
 
 const parseMinusSeparatedExpression = (expression: string): number => {
 	const numbersString = split(expression, '-');
-	const EMPTY_STRING = '';
-	const emptyStringIndex = numbersString.indexOf(EMPTY_STRING);
+	const emptyStringIndex = numbersString.indexOf('');
 
 	if (emptyStringIndex !== -1) {
 		numbersString[emptyStringIndex] = '0';
