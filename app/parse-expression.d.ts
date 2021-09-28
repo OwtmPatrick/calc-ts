@@ -1,2 +1,2 @@
-declare const parsePlusSeparatedExpression: (expression: string) => any;
+declare const parsePlusSeparatedExpression: (expression: string) => number;
 export default parsePlusSeparatedExpression;
