@@ -24,6 +24,8 @@ class Calc {
 	public init(): void {
 		const btns = [].slice.call(document.querySelectorAll<HTMLButtonElement>('.calc__btn'));
 
+		console.log('init');
+
 		btns.forEach((btn: HTMLButtonElement): void => {
 			btn.addEventListener('click', (): void => this.onBtnClick(btn));
 		});
