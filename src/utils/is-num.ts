@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-restricted-globals
-const isNum = (v: any): boolean => !isNaN(parseFloat(v)) && isFinite(v);
+const isNum = (v: string): boolean => !Number.isNaN(parseFloat(v)) && Number.isFinite(Number(v));
 
 export default isNum;
