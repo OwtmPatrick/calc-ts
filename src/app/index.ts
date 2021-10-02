@@ -1,6 +1,8 @@
 import getElementText from '../utils/get-element-text';
 import isMobile from '../utils/is-mobile';
 import omitNules from '../utils/omit-nules';
+import isOperator from '../utils/is-operator';
+import replaceCharInExpression from '../utils/replace-char-in-expression';
 import keys from '../constants/keys';
 import error from '../constants/error';
 import parse from '../parser/parse';
@@ -68,15 +70,14 @@ class Calc {
 	};
 
 	private print = (text: string | null): void => {
-		if (text !== null) {
-			if (text === '*') {
-				this.input.textContent += '×';
-			} else if (text === '.') {
-				this.input.textContent += ',';
-			} else {
-				this.input.textContent += text;
-			}
+		this.expression += text;
+		const preLastInputChar = this.expression[this.expression.length - 2];
+
+		if (isOperator(preLastInputChar) && text && isOperator(text)) {
+			this.expression = this.expression.slice(0, -2) + text;
 		}
+
+		this.input.textContent = replaceCharInExpression(this.expression, '*', 'x');
 	};
 
 	private onKeyDown = (event: KeyboardEvent): void => {
@@ -88,7 +89,6 @@ class Calc {
 				return;
 			}
 
-			this.expression += key;
 			this.print(key);
 		}
 	};
@@ -108,7 +108,6 @@ class Calc {
 			return;
 		}
 
-		this.expression += text;
 		this.print(text);
 	};
 }
