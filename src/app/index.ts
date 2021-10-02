@@ -1,9 +1,10 @@
 import getElementText from '../utils/get-element-text';
 import isMobile from '../utils/is-mobile';
 import omitNules from '../utils/omit-nules';
-import parsePlusSeparatedExpression from './parse-expression';
 import keys from '../constants/keys';
 import error from '../constants/error';
+import parse from '../parser/parse';
+import evaluate from '../parser/evaluate';
 
 class Calc {
 	private input: HTMLDivElement;
@@ -23,8 +24,6 @@ class Calc {
 
 	public init(): void {
 		const btns = [].slice.call(document.querySelectorAll<HTMLButtonElement>('.calc__btn'));
-
-		console.log('init');
 
 		btns.forEach((btn: HTMLButtonElement): void => {
 			btn.addEventListener('click', (): void => this.onBtnClick(btn));
@@ -47,7 +46,9 @@ class Calc {
 			return;
 		}
 
-		const result = parsePlusSeparatedExpression(expression);
+		const AST = parse(expression);
+		const result = evaluate(AST);
+
 		const isError: boolean = window.isNaN(result) || result === Infinity || result === -Infinity;
 
 		if (isError) {
@@ -58,13 +59,13 @@ class Calc {
 
 		this.inputOut.classList.remove(error.className);
 		this.inputOut.textContent = omitNules(result.toFixed(7));
-	}
+	};
 
 	private clear = (): void => {
 		this.input.textContent = '';
 		this.expression = '';
 		this.inputOut.textContent = '';
-	}
+	};
 
 	private print = (text: string | null): void => {
 		if (text !== null) {
@@ -76,7 +77,7 @@ class Calc {
 				this.input.textContent += text;
 			}
 		}
-	}
+	};
 
 	private onKeyDown = (event: KeyboardEvent): void => {
 		const {key} = event;
@@ -109,7 +110,7 @@ class Calc {
 
 		this.expression += text;
 		this.print(text);
-	}
+	};
 }
 
 export default Calc;
